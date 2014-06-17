@@ -1,0 +1,10 @@
+<?php
+define('ACC', true);
+require_once('../include/init.php');
+
+set_time_limit(0);
+
+$account_id=$_POST['account_id'];
+$user=new UserMapper();
+$user->addUser($account_id);
+?>

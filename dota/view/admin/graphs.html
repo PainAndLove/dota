@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf8" />
+<title>Admin</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../view/admin/img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../view/admin/img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../view/admin/img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../view/admin/css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../view/admin/css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../view/admin/css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../view/admin/css/custom.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../view/admin/js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../view/admin/js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.supersubs.min.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.nyroModal.pack.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.validate_pack.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../view/admin/css/ie.css"/>
+<script SRC="../view/admin/js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script SRC="../view/admin/js/IE8.js"></script>
+<![endif]-->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	/* progress bar animations - setting initial values */
+	Administry.progress("#progress1", 1, 6);
+	
+	// validate form on keyup and submit
+	var validator = $("#sampleform").validate({
+		rules: {
+			firstname: "required",
+			lastname: "required",
+			username: {
+				required: true,
+				minlength: 2
+			},
+			password: {
+				required: true,
+				minlength: 5
+			},
+			password_confirm: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			dateformat: "required",
+			terms: "required"
+		},
+		messages: {
+			firstname: "Enter your firstname",
+			lastname: "Enter your lastname",
+			username: {
+				required: "Enter a username",
+				minlength: jQuery.format("Enter at least {0} characters")
+			},
+			password: {
+				required: "Provide a password",
+				rangelength: jQuery.format("Enter at least {0} characters")
+			},
+			password_confirm: {
+				required: "Repeat your password",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				equalTo: "Enter the same password as above"
+			},
+			email: {
+				required: "Please enter a valid email address",
+				minlength: "Please enter a valid email address"
+			},
+			dateformat: "Choose your preferred dateformat",
+			terms: " "
+		},
+		// the errorPlacement has to take the layout into account
+		errorPlacement: function(error, element) {
+			error.insertAfter(element.parent().find('label:first'));
+		},
+		// specifying a submitHandler prevents the default submit, good for the demo
+		submitHandler: function() {
+			alert("Data submitted!");
+		},
+		// set new class to error-labels to indicate valid fields
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("ok");
+		}
+	});
+	
+	// propose username by combining first- and lastname
+	$("#username").focus(function() {
+		var firstname = $("#firstname").val();
+		var lastname = $("#lastname").val();
+		if(firstname && lastname && !this.value) {
+			this.value = firstname + "." + lastname;
+		}
+	});
+
+});
+</script>
+
+<script type="text/javascript">
+
+function createXHR(){
+	var xhr='';
+	if(window.XMLHttpRequest){
+		xhr=new XMLHttpRequest;
+	}else if(window.ActiveXObject){
+		xhr=new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	return xhr;
+}
+
+
+
+function add(){
+	var doc=editor.getContent();
+	var id=document.getElementsByTagName('select')[0].value;
+	var xhr=createXHR();
+	xhr.open('post','graphs_ajax.php',false);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	var data="id="+id+"&doc="+doc;
+	xhr.send(data);
+	document.getElementById('notice').innerHTML="<font color=red>"+"攻略添加成功！"+"</font>";
+	editor.setContent('');
+}
+
+</script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="../ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="../ueditor/ueditor.all.js"></script>
+<!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
+<script type="text/javascript" src="../ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<style>
+#container{
+	width:730px
+}
+
+</style>
+
+</head>
+<body>
+
+	<!-- Header -->
+	<header id="top">
+		<div class="wrapper">
+			<!-- Title/Logo - can use text instead of image -->
+			<div id="title"><img SRC="../view/admin/img/logo.png" alt="Administry" /><!--<span>Administry</span> demo--></div>
+			<!-- Top navigation -->
+			<div id="topnav">
+				<a href="#"><img class="avatar" SRC="../view/admin/img/user_32.png" alt="" /></a>
+				Logged in as <b>Admin</b>
+				<span>|</span> <a href="#">Settings</a>
+				<span>|</span> <a href="#">Logout</a><br />
+				<small>You have <a href="#" class="high"><b>1</b> new message!</a></small>
+			</div>
+			<!-- End of Top navigation -->
+			<!-- Main navigation -->
+			<nav id="menu">
+				<ul class="sf-menu">
+					<li><a HREF="dashboard.php">服务状态</a></li>			
+					<li><a HREF="tables.php">数据表</a></li>
+					<li><a HREF="forms.php">视频推送</a></li>
+					<li class="current"><a HREF="graphs.php">英雄攻略</a></li>		
+				</ul>
+			</nav>
+			<!-- End of Main navigation -->
+			<!-- Aside links -->
+			<!-- End of Aside links -->
+		</div>
+	</header>
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>英雄攻略管理</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+
+					<h3>攻略的查看/添加/更改</h3>
+					<div class="box box-info">所有信息不能为空</div>
+					
+					<form id="sampleform" method="post" action="#">
+
+						<fieldset>
+							<legend>添加/更改攻略</legend>
+
+							<p>
+							<select>
+								<?php foreach($heroData as $key=>$hero){?>							
+								<option value="<?php echo $hero['hero_id'];?>"><?php echo $hero['hero_localized_name'];?></option>	
+								<?php }?>
+							</select>
+							</p>
+
+							<p>
+								<label class="required" for="lastname">攻略:</label><br/>
+								
+								<script id="container" name="content" type="text/plain">
+    							在此输入英雄攻略
+								</script>
+								<script type="text/javascript" >
+				   	 					var editor = UE.getEditor('container')
+								</script>
+							</p>
+
+							<p>
+								<input type="button" value="添加" onclick="add();">
+							</p>
+							
+							<div id="notice"></div>
+
+						</fieldset>
+
+					</form>
+
+					<h3>查看攻略</h3>
+					
+					<table id="report" class="stylized full" style="">
+						<thead>
+							<tr>
+								<th>英雄ID</th>
+								<th class="ta-right">英雄名称</th>
+								<th class="ta-right">攻略</th>
+							</tr>
+						</thead>
+						<tbody>
+						 
+						<?php foreach($heroData2 as $key=>$hero) {?>
+							<tr>
+								<td class="title">
+										<?php echo $hero['hero_id'];?>
+								</td>
+								<td class="ta-right"><?php echo $hero['hero_localized_name'];?></td>
+								
+								<td class="ta-right">
+									<div>
+											<?php 
+												echo substr($hero['document'],0,60);
+												if(strlen($hero['document'])>60)
+												echo "......";
+											?>
+									</div>
+								</td>
+								
+							</tr>
+						<?php }?>
+						
+						
+						</tbody>
+					</table>
+					
+					<FONT size="5">
+					<?php echo $p->show();?>
+					</FONT>
+	
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<div id="rightmenu">
+						<header>
+							<h3>帮助文档:</h3>
+						</header>
+						<dl class="first">
+							<dt><img width="16" height="16" alt="Basic styles" SRC="../view/admin/img/style.png"></dt>
+							<dd><a HREF="#">查看帮助</a></dd>
+							<dd class="last">查看视频详细文档</dd>							
+							
+											
+						</dl>
+					</div>
+					
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	<br />
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				
+			</nav>
+			
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../view/admin/js/administry.js"></script>
+</body>
+</html>

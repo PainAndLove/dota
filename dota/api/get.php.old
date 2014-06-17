@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<title>新建网页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="布尔教育 http://www.itbool.com" />
+
+<script type="text/javascript">
+//获取get参数
+function Request(argname)
+{
+	var url = document.location.href;
+	var arrStr = url.substring(url.indexOf("?")+1).split("&");
+	//return arrStr;
+	for(var i =0;i<arrStr.length;i++){
+	   var loc = arrStr[i].indexOf(argname+"=");
+	   if(loc!=-1){
+		   return arrStr[i].replace(argname+"=","").replace("?","");
+		   break;
+	   }
+	  
+	}
+}
+
+//创建ajax对象
+function createXHR(){
+	var xhr=null;
+	if(window.XMLHttpRequest){
+		xhr=new XMLHttpRequest();
+	}else if(window.ActiveXObject){
+		xhr=new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	return xhr;
+}
+
+var xhr=createXHR();
+//查询是否已经存在数据库
+xhr.open('post','./isInDB.php',true);
+xhr.onreadystatechange=function(){
+	if(this.readyState==4){
+		if(this.responseText=='1'){
+			//在数据库中直接跳转到获取数据的页面
+			window.location.href='./summarize.php?account_id='+Request('account_id');
+		}else{
+			//异步提交ID并且跳转到等待页面
+			var xhr1=createXHR();
+			xhr1.open('post','./addUser.php',true);
+			xhr1.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			xhr1.send('account_id='+Request('account_id'));
+			window.location.href='./wait.php';
+		}
+	}
+}
+//console.log(Request('account_id'));
+xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+xhr.send('account_id='+Request('account_id'));
+
+</script>
+
+
+</head>
+    <body>
+    	
+    </body>
+</html>

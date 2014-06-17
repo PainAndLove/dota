@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin Template</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../view/admin/img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../view/admin/img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../view/admin/img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../view/admin/css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../view/admin/css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../view/admin/css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../view/admin/css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../view/admin/css/custom.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../view/admin/js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../view/admin/js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../view/admin/js/jquery.supersubs.min.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.validate_pack.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.nyroModal.pack.js"></script>
+<!-- jQuery data tables -->
+<script type="text/javascript" SRC="../view/admin/js/jquery.dataTables.min.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../view/admin/css/ie.css"/>
+<script SRC="../view/admin/js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script SRC="../view/admin/js/IE8.js"></script>
+<![endif]-->
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	/* datatable */
+	$('#example').dataTable();
+	
+	/* expandable rows */
+	Administry.expandableRows();
+});
+
+</script>
+
+<script type="text/javascript">
+
+function createXHR(){
+	var xhr='';
+	if(window.XMLHttpRequest){
+		xhr=new XMLHttpRequest;
+	}else if(window.ActiveXObject){
+		xhr=new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	return xhr;
+}
+
+
+
+function send(){
+	
+	var sql=document.getElementsByTagName("textarea")[0].value;
+	var xhr=createXHR();
+	xhr.open('post','tables_ajax.php',false);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	var data="user_sql="+sql;
+	xhr.send(data);
+	alert(xhr.responseText);
+}
+</script>
+
+
+</head>
+<body>
+	<!-- Header -->
+	<header id="top">
+		<div class="wrapper">
+			<!-- Title/Logo - can use text instead of image -->
+			<div id="title"><img SRC="../view/admin/img/logo.png" alt="Administry" /><!--<span>Administry</span> demo--></div>
+			<!-- Top navigation -->
+			<div id="topnav">
+				<a href="#"><img class="avatar" SRC="../view/admin/img/user_32.png" alt="" /></a>
+				Logged in as <b>Admin</b>
+				<span>|</span> <a href="#">Settings</a>
+				<span>|</span> <a href="#">Logout</a><br />
+				<small>You have <a href="#" class="high"><b>1</b> new message!</a></small>
+			</div>
+			<!-- End of Top navigation -->
+			<!-- Main navigation -->
+			<nav id="menu">
+				<ul class="sf-menu">
+					<li><a HREF="dashboard.php">服务状态</a></li>
+					
+					<li class="current"><a HREF="tables.php">数据表</a></li>
+					<li><a HREF="forms.php">视频推送</a></li>	
+					<li><a HREF="graphs.php">英雄攻略</a></li>	
+				</ul>
+			</nav>
+			<!-- End of Main navigation -->
+			<!-- Aside links -->
+			<aside><b>English</b> &middot; <a href="#">Spanish</a> &middot; <a href="#">German</a></aside>
+			<!-- End of Aside links -->
+		</div>
+	</header>
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>Redis数据库与Mysql数据库信息</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+					
+					<h3>Redis数据库</h3>
+					
+					<div class="box box-info">点击数据名查看详细信息</div>
+					
+					<table id="report" class="stylized full" style="">
+						<thead>
+							<tr>
+								<th>数据名（Key）</th>
+								<th class="ta-right">数据大小</th>
+								<th class="ta-right">操作</th>
+								<th>备注</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="title">
+									<div>
+										<a href="#"><b>new_user</b></a>
+										<div class="listingDetails">
+											<div class="pad">
+												<b>等待加入的玩家</b>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td class="ta-right"><?php echo $redis->lsize('new_user');?></td>
+								<td class="ta-right"><a href='' onclick=<?php $redis->destory('new_user'); ?>>删除</a></td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td class="title">
+									<div>
+										<a href="#"><b>update_user</b></a>
+										<div class="listingDetails" style="z-index:1">
+											<div class="pad">
+												<b>等待更新的玩家</b>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td class="ta-right"><?php echo $redis->lsize('update_user');?></td>
+								<td class="ta-right"><a href='' onclick=<?php $redis->destory('update_user'); ?>>删除</a></td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td class="title">
+									<div>
+										<a href="#"><b>update_match</b></a>
+										<div class="listingDetails">
+											<div class="pad">
+												<b>等待更新的比赛</b>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td class="ta-right"><?php echo $redis->lsize('update_match');?></td>
+								<td class="ta-right"><a href='' onclick=<?php $redis->destory('update_match'); ?>>删除</a></td>
+								<td> </td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="clear">&nbsp;</div>
+					
+					<h3>Mysql数据库</h3>
+					
+					<table class="display stylized" id="example">
+						<thead>
+							<tr>
+								<th>数据表名</th>
+								<th>数据量</th>
+								<th>操作</th>
+								<th>引擎</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="gradeX">
+								<td>matches</td>
+								<td><?php echo $match->count();?></td>
+								<td>暂未定义</td>
+								<td class="center">InnoDB</td>
+							</tr>
+							<tr class="gradeX">
+								<td>slots</td>
+								<td><?php echo $slot->count();?></td>
+								<td>暂未定义</td>
+								<td class="center">InnoDB</td>
+							</tr>
+							<tr class="gradeX">
+								<td>ability_upgrades</td>
+								<td><?php echo $abil->count();?></td>
+								<td>暂未定义</td>
+								<td class="center">InnoDB</td>
+							</tr>
+							
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>数据表名</th>
+								<th>数据量</th>
+								<th>操作</th>
+								<th>引擎</th>
+							</tr>
+						</tfoot>
+					</table>
+					
+					<div class="clear">&nbsp;</div>
+					
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<div id="rightmenu">
+						<header>
+							<h3>输入Sql语句进行操作</h3>
+						</header>
+						<dl class="first">
+							
+							<textarea width="16" height="20' id="user_sql"></textarea>							
+							<input	type="button" onclick="send();" value="提交" />
+						</dl>
+					</div>
+					
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				
+			</nav>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../view/admin/js/administry.js"></script>
+</body>
+</html>
